@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use(cors());
 
-router.use("/meals", mealsRouter);
+router.use("/", mealsRouter);
 
 if (process.env.API_PATH) {
   app.use(process.env.API_PATH, router);
