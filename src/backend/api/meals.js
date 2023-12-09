@@ -10,9 +10,7 @@ router.get("/meals", async (request, response) => {
     // knex syntax for selecting things. Look up the documentation for knex for further info
     const titles = await knex("meals").select("title");
     response.json(titles);
-  } catch (error) {
-    throw error;
-  }
+  } catch (error) { response.status(500).json({ error: "An unexpected error occurred while processing your request." }); }
 });
 
 
@@ -22,9 +20,12 @@ router.get("/future-meals", async (request, response) => {
     const futureMeals = await knex("meals").select(["id", "title", "description", "price"]).where("meal_when", ">", formattedCurrentDate);
     response.json(futureMeals);
   } catch (error) {
-    throw error;
+    response.status(500).json({ error: "An unexpected error occurred while processing your request." });
   }
 });
+
+
+
 
 router.get("/past-meals", async (request, response) => {
   try {
@@ -32,7 +33,7 @@ router.get("/past-meals", async (request, response) => {
     const pastMeals = await knex("meals").select(["id", "title", "description", "price"]).where("meal_when", "<", formattedCurrentDate);
     response.json(pastMeals);
   } catch (error) {
-    throw error;
+    response.status(500).json({ error: "An unexpected error occurred while processing your request." });
   }
 });
 
@@ -43,7 +44,7 @@ router.get("/all-meals", async (request, response) => {
     const allMeals = await knex("meals").select(["id", "title", "description", "price"]).orderBy('id', 'desc');
     response.json(allMeals);
   } catch (error) {
-    throw error;
+    response.status(500).json({ error: "An unexpected error occurred while processing your request." });
   }
 });
 
@@ -71,7 +72,7 @@ router.get("/last-meal", async (request, response) => {
       response.status(404).json({ message: "No meals available." });
     }
   } catch (error) {
-    throw error;
+    response.status(500).json({ error: "An unexpected error occurred while processing your request." });
   }
 });
 
