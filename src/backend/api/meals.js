@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../database");
 
-let date = new Date();
+const date = new Date();
 const formattedCurrentDate = date.toISOString().slice(0, 19).replace('T', ' ');
 
 router.get("/meals", async (request, response) => {
